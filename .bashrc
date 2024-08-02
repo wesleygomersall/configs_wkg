@@ -157,3 +157,13 @@ PS1='\[\e[38;5;219m\]\d\[\e[0m\] \[\e[38;5;219m\]\t\[\e[0m\] \[\e[38;5;219m\]||\
 
 export PYTHONPATH="${PYTHONPATH}:/home/wesley/PythonModules/bioinfo-module-wesleygomersall/"
 
+# check: tmux installed, interactive session, not already in tmux session
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+	ID="$( tmux ls | grep -vm1 attached | cut -d: -f1 )"    # get the id of a deattached session
+        if [[ -z "$ID" ]] ;then                                 # if not available create a new one
+        	tmux new-session
+        else
+                tmux attach-session -t "$ID"                    # if available, attach to it
+        fi
+fi
+
