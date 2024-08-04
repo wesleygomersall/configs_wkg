@@ -1,7 +1,7 @@
 # configs_wkg
 This repo contains a bunch of my files for customizing stuff.
 
-Use the scripts for copying configs to and from this repo. 
+Use the scripts for copying configs to and from this repo. WARNING: USING THESE SCRIPTS WILL COPY ALL FILES. IF YOU ONLY WWISH TO COPY SUBSET THEN DO IT MANUALLY. 
 ```bash
 ~/configs_wkg/setup.sh local # copies config files from ~configs_wkg/local/ to home directory
 ~/configs_wkg/setup.sh remote # copies config files from ~configs_wkg/remote/ to home directory
