@@ -37,6 +37,9 @@ nmap <silent> <c-j> :wincmd j<CR>
 nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
 
+" fzf: :Rg searches through file names. That is what :Files does. Change this. 
+command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0) 
+
 " for gitgutter to work: 
 :set updatetime=100 " this is the speed at which the changes are detected, default is 4s
 :set signcolumn=auto " allows extra column to the left for change tracking
