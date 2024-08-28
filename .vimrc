@@ -100,6 +100,9 @@ nmap <silent> <c-j> :wincmd j<CR>
 nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
 
+nmap <leader>h :sp <CR>
+nmap <leader>v :vsp <CR>
+
 nmap <leader>f :Files<CR>
 nmap <leader>r :RG <CR>
 
