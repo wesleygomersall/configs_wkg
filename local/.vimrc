@@ -8,34 +8,37 @@ call plug#begin()
 
 " List your plugins here
 " Plug 'tpope/vim-sensible'
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
+
 Plug 'preservim/nerdtree'
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } 
 Plug 'junegunn/fzf.vim'
 
 Plug 'airblade/vim-gitgutter'
 
 Plug 'tpope/vim-fugitive' 
 
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
 call plug#end()
 
 syntax on
 filetype on
 
+" Line number
 :set number
-
+ 
+" Line numbers swapping between absolute and relative depending on mode
 :augroup numbertoggle
 :  autocmd!
 :  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
 :  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
 :augroup END
-
-" Use ctrl-[hjkl] to select the active split!
-nmap <silent> <c-k> :wincmd k<CR>
-nmap <silent> <c-j> :wincmd j<CR>
-nmap <silent> <c-h> :wincmd h<CR>
-nmap <silent> <c-l> :wincmd l<CR>
 
 " fzf: :Rg searches through file names. That is what :Files does. Change this. 
 command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0) 
@@ -57,3 +60,46 @@ let g:gitgutter_sign_removed = 'XX'
 let g:gitgutter_sign_removed_first_line = '/\'
 let g:gitgutter_sign_removed_above_and_below = '{'
 let g:gitgutter_sign_modified_removed = 'MX'
+
+" vim-lsp diagnostics
+let g:lsp_diagnostics_enabled = 0 " Disable warnings, hints, errors, etc for being too verbose
+
+" asyncomplete.vim tab completion\
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+" If you prefer the enter key to always insert a new line (even if the popup menu is visible) then you can amend the above mapping as follows:
+" inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<cr>" : "\<cr>"
+
+" only bring up autocomplete menu with tab
+let g:asyncomplete_auto_popup = 0
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ asyncomplete#force_refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" popup menu colors
+highlight Pmenu ctermbg=black ctermfg=white guibg=black guifg=white
+highlight PmenuSel ctermbg=white ctermfg=black guibg=white guibg=black
+highlight PmenuSbar ctermbg=darkgray guibg=darkgray
+highlight PmenuThumb ctermbg=white  guibg=darkgray
+
+" REMAPS
+" Use ctrl-[hjkl] to select the active split: 
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
+
+nmap <leader>f :Files<CR>
+nmap <leader>r :RG <CR>
+
+nmap <silent> <space> :LspHover<CR>
+nmap <leader>d :LspPeekDefinition<CR>
