@@ -21,6 +21,8 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
+" `:LspInstallServer` command will install language server. 
+" `:LspUninstallServer server-name` will uninstall server. 
 
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
@@ -69,7 +71,7 @@ inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 " If you prefer the enter key to always insert a new line (even if the popup menu is visible) then you can amend the above mapping as follows:
-" inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<cr>" : "\<cr>"
+" inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<c>" : "\<cr>"
 
 " only bring up autocomplete menu with tab
 let g:asyncomplete_auto_popup = 0
@@ -102,4 +104,4 @@ nmap <leader>f :Files<CR>
 nmap <leader>r :RG <CR>
 
 nmap <silent> <space> :LspHover<CR>
-nmap <leader>d :LspPeekDefinition<CR>
+nmap <leader>d :LspPeekDefinition<CR> 
