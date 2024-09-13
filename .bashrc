@@ -19,6 +19,10 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+# better history search
+source /usr/share/bash-completion/completions/fzf
+source /usr/share/doc/fzf/examples/key-bindings.bash 
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -28,7 +32,7 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -79,22 +83,18 @@ if [ -x /usr/bin/dircolors ]; then
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+    #alias grep='grep --color=auto'
+    #alias fgrep='fgrep --color=auto'
+    #alias egrep='egrep --color=auto'
 fi
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='ls -alhF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+#alias ll='ls -l'
+#alias la='ls -A'
+#alias l='ls -CF'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -116,23 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
-#my aliases
-alias fman="compgen -c | fzf | xargs man"
-alias qopen="fzf | xargs xdg-open"
-
-#alias for archive
-alias mktar='tar -cvf'
-alias untar='tar -xvf'
-alias mkgz='tar -cvzf'
-alias ungz='tar -xvzf'
-
-#for pyenv on log in and when bash terminal is opened
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/wesley/miniforge3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -152,19 +135,13 @@ if [ -f "/home/wesley/miniforge3/etc/profile.d/mamba.sh" ]; then
 fi
 # <<< conda initialize <<<
 
+export PYTHONPATH="${PYTHONPATH}:/home/wesley/PythonModules/bioinfo-module-wesleygomersall/"
+
 #customizing bash prompt
 PS1='\[\e[38;5;219m\]\d\[\e[0m\] \[\e[38;5;219m\]\t\[\e[0m\] \[\e[38;5;219m\]||\[\e[0m\] \[\e[38;5;219;1m\]\w\n\[\e[38;5;40;4m\]\u@\h\[\e[0m\] \[\e[1m\][\[\e[0;2m\]\s\[\e[0;1m\]]\[\e[0m\] \[\e[38;5;40m\]\$\[\e[0m\] '
 
-export PYTHONPATH="${PYTHONPATH}:/home/wesley/PythonModules/bioinfo-module-wesleygomersall/"
-
-# check: tmux installed, interactive session, not already in tmux session
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-	ID="$( tmux ls | grep -vm1 attached | cut -d: -f1 )"    # get the id of a deattached session
-        if [[ -z "$ID" ]] ;then                                 # if not available create a new one
-        	tmux new-session
-        else
-                tmux attach-session -t "$ID"                    # if available, attach to it
-        fi
-fi
-
+# cat ~/todo  was pretty lame so I do this instead 
+cat ~/.bash_beargreet1
+awk  '{print "| |", substr($0,1,60)}' ~/todo
+cat ~/.bash_beargreet2
 
