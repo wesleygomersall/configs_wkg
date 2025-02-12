@@ -37,6 +37,13 @@ filetype on
 
 set splitbelow
 
+" change tabs to 2 whitespace characters
+:set tabstop=4
+
+" visible tab char
+" :set list
+" :set listchars=tab:>-
+ 
 " Line numbers swapping between absolute and relative depending on mode
 :augroup numbertoggle
 :  autocmd!
@@ -58,12 +65,14 @@ highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
-let g:gitgutter_sign_added = '>>'
-let g:gitgutter_sign_modified = 'MM'
-let g:gitgutter_sign_removed = 'XX'
-let g:gitgutter_sign_removed_first_line = '/\'
+let g:gitgutter_sign_allow_clobber = 1 " prioritize the gitgutter symbols in the sign column
+
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = 'X'
+let g:gitgutter_sign_removed_first_line = '^'
 let g:gitgutter_sign_removed_above_and_below = '{'
-let g:gitgutter_sign_modified_removed = 'MX'
+let g:gitgutter_sign_modified_removed = '~X'
 
 " vim-lsp diagnostics
 let g:lsp_diagnostics_enabled = 0 " Disable warnings, hints, errors, etc for being too verbose
@@ -102,8 +111,14 @@ nmap <silent> <c-j> :wincmd j<CR>
 nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
 
+nmap <leader>h :sp <CR>
+nmap <leader>v :vsp <CR>
+
 nmap <leader>f :Files<CR>
 nmap <leader>r :RG <CR>
 
 nmap <silent> <space> :LspHover<CR>
 nmap <leader>d :LspPeekDefinition<CR> 
+" scroll the popup window with Control+j and Control+k
+nnoremap <buffer> <expr><c-j> lsp#scroll(+4)
+nnoremap <buffer> <expr><c-k> lsp#scroll(-4)

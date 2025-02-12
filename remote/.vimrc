@@ -105,6 +105,9 @@ nmap <leader>r :RG <CR>
 
 nmap <silent> <space> :LspHover<CR>
 nmap <leader>d :LspPeekDefinition<CR> 
+" scroll the popup window with Control+j and Control+k
+nnoremap <buffer> <expr><c-j> lsp#scroll(+4)
+nnoremap <buffer> <expr><c-k> lsp#scroll(-4)
 
 " Talapas-specific settings
 let g:lsp_document_highlight_enabled = 0 " turn off highlights for current symbol
