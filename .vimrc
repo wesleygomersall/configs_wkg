@@ -4,12 +4,6 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 call plug#begin()
 
 " List your plugins here
@@ -41,7 +35,10 @@ filetype on
 " Line number
 :set number
 
-set splitbelow
+:set splitbelow
+
+" No wrapping of lines by default
+:set wrap! 
 
 " change tabs to 2 whitespace characters
 :set tabstop=4
