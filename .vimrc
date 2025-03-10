@@ -174,7 +174,8 @@ nnoremap <buffer> <expr><c-j> lsp#scroll(+4)
 nnoremap <buffer> <expr><c-k> lsp#scroll(-4)
 
 " bring search results to the middle of the screen
-nnoremap n nzz nnoremap N Nzz
+nnoremap n nzz 
+nnoremap N Nzz
 " control d and u snap to the middle of the screen
 nnoremap <c-d> <c-d>zz
 nnoremap <c-u> <c-u>zz
