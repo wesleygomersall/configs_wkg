@@ -12,6 +12,8 @@ call plug#begin()
 
 Plug 'preservim/nerdtree'
 
+Plug 'mbbill/undotree'
+
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } 
 Plug 'junegunn/fzf.vim'
 
@@ -32,6 +34,8 @@ call plug#end()
 syntax on
 filetype on
 
+set updatetime =50
+
 " Line number
 :set number
 
@@ -40,8 +44,11 @@ filetype on
 " No wrapping of lines by default
 :set wrap! 
 
-" change tabs to 2 whitespace characters
+" change tabs to 4 whitespace characters
 :set tabstop=4
+:set softtabstop=4
+:set shiftwidth=4
+:set expandtab
 
 " visible tab char
 " :set list
@@ -107,21 +114,75 @@ highlight PmenuSel ctermbg=white ctermfg=black guibg=white guibg=black
 highlight PmenuSbar ctermbg=darkgray guibg=darkgray
 highlight PmenuThumb ctermbg=white  guibg=darkgray
 
+if has("persistent_undo")
+   let target_path = expand('~/.vim/undodir')
+
+    " create the directory and any parent directories
+    " if the location does not exist.
+    if !isdirectory(target_path)
+        call mkdir(target_path, "p", 0700)
+    endif
+
+    let &undodir=target_path
+    set noswapfile
+    set undofile
+endif
+
+" keep at least 10 lines visible around cursor when possible
+set scrolloff=10
+
+set incsearch
+
 " REMAPS
+let mapleader =" "
+
+nnoremap H ^
+nnoremap L $
+
 " Use ctrl-[hjkl] to select the active split: 
 nmap <silent> <c-k> :wincmd k<CR>
 nmap <silent> <c-j> :wincmd j<CR>
 nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
 
-nmap <leader>h :sp <CR>
-nmap <leader>v :vsp <CR>
+" copy to system clipboard
+vnoremap <leader>y "+y
+nnoremap <leader>y "+y
+nnoremap <leader>Y "+Y
+
+" make excecutable / run current file
+nnoremap <leader>x <cmd>!chmod +x %<CR>
+nnoremap <leader>s <cmd>! %<CR>
+
+" undo tree toggle
+nnoremap <leader>u :UndotreeToggle<CR>
+
+nmap <leader>b :bp <CR>
 
 nmap <leader>f :Files<CR>
 nmap <leader>r :RG <CR>
+nmap <leader>v :Ex <CR>
 
-nmap <silent> <space> :LspHover<CR>
+nmap <leader>k :LspHover<CR>
 nmap <leader>d :LspPeekDefinition<CR> 
 " scroll the popup window with Control+j and Control+k
 nnoremap <buffer> <expr><c-j> lsp#scroll(+4)
 nnoremap <buffer> <expr><c-k> lsp#scroll(-4)
+
+" bring search results to the middle of the screen
+nnoremap n nzz
+nnoremap N Nzz
+
+" control d and u snap to the middle of the screen
+nnoremap <c-d> <c-d>zz
+nnoremap <c-u> <c-u>zz
+
+" move highlighted lines in visual mode
+vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
+
+" keep cursor in place when concatenating lines
+nnoremap J mzJ`z 
+
+nnoremap Q <nop>
+
