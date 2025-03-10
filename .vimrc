@@ -3,9 +3,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-
 call plug#begin()
-
 " List your plugins here
 " Plug 'tpope/vim-sensible'
 " Plug 'ervandew/supertab'
@@ -13,6 +11,8 @@ call plug#begin()
 Plug 'preservim/nerdtree'
 
 Plug 'mbbill/undotree'
+
+Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } 
 Plug 'junegunn/fzf.vim'
@@ -37,18 +37,18 @@ filetype on
 set updatetime =50
 
 " Line number
-:set number
+set number
 
-:set splitbelow
+set splitbelow
 
 " No wrapping of lines by default
-:set wrap! 
+set wrap! 
 
 " change tabs to 4 whitespace characters
-:set tabstop=4
-:set softtabstop=4
-:set shiftwidth=4
-:set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
 
 " visible tab char
 " :set list
@@ -109,10 +109,13 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " popup menu colors
-highlight Pmenu ctermbg=black ctermfg=white guibg=black guifg=white
-highlight PmenuSel ctermbg=white ctermfg=black guibg=white guibg=black
-highlight PmenuSbar ctermbg=darkgray guibg=darkgray
-highlight PmenuThumb ctermbg=white  guibg=darkgray
+" highlight Pmenu ctermbg=black ctermfg=white guibg=black guifg=white
+" highlight PmenuSel ctermbg=white ctermfg=black guibg=white guibg=black
+" highlight PmenuSbar ctermbg=darkgray guibg=darkgray
+" highlight PmenuThumb ctermbg=white  guibg=darkgray
+
+set termguicolors     " enable true colors support
+colorscheme moonfly
 
 if has("persistent_undo")
    let target_path = expand('~/.vim/undodir')
@@ -158,6 +161,7 @@ nnoremap <leader>s <cmd>! %<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
 
 nmap <leader>b :bp <CR>
+nmap <leader>g :bn <CR>
 
 nmap <leader>f :Files<CR>
 nmap <leader>r :RG <CR>
@@ -170,9 +174,7 @@ nnoremap <buffer> <expr><c-j> lsp#scroll(+4)
 nnoremap <buffer> <expr><c-k> lsp#scroll(-4)
 
 " bring search results to the middle of the screen
-nnoremap n nzz
-nnoremap N Nzz
-
+nnoremap n nzz nnoremap N Nzz
 " control d and u snap to the middle of the screen
 nnoremap <c-d> <c-d>zz
 nnoremap <c-u> <c-u>zz
