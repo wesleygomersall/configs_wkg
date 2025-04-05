@@ -116,6 +116,7 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 set termguicolors     " enable true colors support
 colorscheme moonfly
+set colorcolumn=80
 
 if has("persistent_undo")
    let target_path = expand('~/.vim/undodir')
