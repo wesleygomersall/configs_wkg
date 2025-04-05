@@ -19,7 +19,3 @@ alias newnote='vim $(printf %s "note_wkg_" $(date "+%Y%m%d-%I.%M%p") ".md")'
 #scripts
 scripts_dir='/home/wesley/.my_bash_scripts'
 alias tm="$scripts_dir/tmux_new_or_attach.sh"
-alias dttouch="$scripts_dir/datetimetouch.sh"
-alias dtouch="$scripts_dir/datetouch.sh"
-
-
