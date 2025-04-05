@@ -14,8 +14,7 @@ alias storage='df -h -x devtmpfs -x tmpfs'
 alias ll='ls -lah'
 alias tr='tree -h'
 
-alias dtf='$(date -I | sed -r 's/-//g')'
-alias dt='cat $(date -I | sed -r 's/-//g') "_"'
+alias newnote='vim $(printf %s "note_wkg_" $(date "+%Y%m%d-%I.%M%p") ".md")'
 
 #scripts
 scripts_dir='/home/wesley/.my_bash_scripts'
