@@ -23,10 +23,7 @@ HISTFILESIZE=2000
 source /usr/share/bash-completion/completions/fzf
 source /usr/share/doc/fzf/examples/key-bindings.bash 
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
+# check the window size after each command and, if necessary, # update the values of LINES and COLUMNS.  shopt -s checkwinsize
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
@@ -129,19 +126,25 @@ else
     fi
 fi
 unset __conda_setup
-
-if [ -f "/home/wesley/miniforge3/etc/profile.d/mamba.sh" ]; then
-    . "/home/wesley/miniforge3/etc/profile.d/mamba.sh"
-fi
 # <<< conda initialize <<<
 
 export PYTHONPATH="${PYTHONPATH}:/home/wesley/PythonModules/bioinfo-module-wesleygomersall/"
 
 #customizing bash prompt
-PS1='\[\e[38;5;219m\]\d\[\e[0m\] \[\e[38;5;219m\]\t\[\e[0m\] \[\e[38;5;219m\]||\[\e[0m\] \[\e[38;5;219;1m\]\w\n\[\e[38;5;40;4m\]\u@\h\[\e[0m\] \[\e[1m\][\[\e[0;2m\]\s\[\e[0;1m\]]\[\e[0m\] \[\e[38;5;40m\]\$\[\e[0m\] '
+# PS1='\[\e[38;5;219m\]\d\[\e[0m\] \[\e[38;5;219m\]\t\[\e[0m\] \[\e[38;5;219m\]||\[\e[0m\] \[\e[38;5;219;1m\]\w\n\[\e[38;5;40;4m\]\u@\h\[\e[0m\] \[\e[1m\][\[\e[0;2m\]\s\[\e[0;1m\]]\[\e[0m\] \[\e[38;5;40m\]\$\[\e[0m\] '
+PROMPT_COMMAND='PS1_CMD1=$(git branch --show-current 2>/dev/null)'; PS1='\[\e[38;5;219m\]\d\[\e[0m\] \[\e[38;5;219m\]\t\[\e[0m\] \[\e[38;5;219m\]|\[\e[93m\]${PS1_CMD1}\[\e[38;5;219m\]|\[\e[0m\] \[\e[38;5;219;1m\]\w\n\[\e[38;5;40;4m\]\u@\h\[\e[22;24m\]\$\[\e[0m\] '
 
-# cat ~/todo  was pretty lame so I do this instead 
-cat ~/.bash_beargreet1
-awk  '{print "| |", substr($0,1,60)}' ~/todo
-cat ~/.bash_beargreet2
+cat ~/todo   
+# cat ~/.bash_beargreet1
+# awk  '{print "| |", substr($0,1,60)}' ~/todo
+# cat ~/.bash_beargreet2
 
+# for user executables
+export PATH="$PATH:$HOME/.local/bin"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+eval "$(zoxide init bash)"
+. "$HOME/.cargo/env"
